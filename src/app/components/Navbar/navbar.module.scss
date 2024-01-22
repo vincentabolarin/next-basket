@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .left {
+    display: flex;
+    align-items: center;
+    gap: 6rem;
+
+    .menu {
+      ul {
+        list-style: none;
+        display: flex;
+        gap: 1rem;
+
+        li {
+          &:hover {
+            color: var(--primary-color);
+          }
+        }
+      }
+    }
+  }
+
+  .right {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+    .login {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .action {
+      display: flex;
+      align-items: center;
+      gap: .2rem;
+      cursor: pointer;
+    }
+  }
+}
