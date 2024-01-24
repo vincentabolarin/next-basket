@@ -1,0 +1,55 @@
+.container {
+  width: 100dvw;
+
+  .icons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 8rem;
+    border-bottom: 1px solid lightgray;
+
+    .socialMedia {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+  }
+
+  .links {
+    padding: 2rem 8rem;
+    display: flex;
+    gap: 4rem;
+    align-items: flex-start;
+
+    p {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-color-secondary);
+      margin-bottom: 1rem;
+
+      &:first-child {
+        font-size: 16px;
+        color: var(--text-color-primary);
+        margin-bottom: 1.2rem;
+      }
+
+      &:not(:first-child) {
+        cursor: pointer;
+
+        &:hover {
+          color: var(--primary-color);
+        }
+      }
+    }
+  }
+
+  .copyright {
+    padding: 2rem 8rem;
+
+    p {
+      .myName {
+        color: var(--primary-color);
+      }
+    }
+  }
+}

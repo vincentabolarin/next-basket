@@ -9,6 +9,7 @@ import { Box, Button } from "@mui/material";
 import styles from "./products.module.scss";
 
 import ProductCard from "../ProductCard/ProductCard";
+import { getDiscountedPrice } from "@components/app/utils/calculations";
 
 interface ProductsProps {
   columnsClass: string;
@@ -89,7 +90,7 @@ const Products: React.FC<ProductsProps> = ({ columnsClass, canLoadMore = false }
                 name={product.title}
                 description={product.description}
                 price={product.price}
-                discountedPrice={product.discountPercentage}
+                discountedPrice={getDiscountedPrice(product.price, product.discountPercentage)}
               />
             );
           })}
