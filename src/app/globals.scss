@@ -3,12 +3,13 @@
   --secondary-color: #23856D;
   --success-color: #2DC071;
   --white: #FFF;
+  --light-gray: #E5E5E5;
+  --light-gray-2: #FAFAFA;
 
   --text-color-primary: #252B42;
   --text-color-secondary: #737373;
   --text-color-muted: #BDBDBD;
 
-  --light-gray: #E5E5E5;
 
   --font-size-12: 12px;
   --font-size-14: 14px;
@@ -83,6 +84,10 @@ body {
 
   .background-color-white {
     background-color: var(--white);
+  }
+
+  .background-color-light-gray-2 {
+    background-color: var(--light-gray-2);
   }
 
   .text-color-primary {
