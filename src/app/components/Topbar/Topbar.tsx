@@ -15,7 +15,7 @@ const Topbar = () => {
 
   return (
     <>
-      <div className={`${styles.container} container`}>
+      <div className={`${styles.container} container color-white background-color-secondary`}>
         <div className={styles.left}>
           <Link href="tel:(255) 555-0118" className={styles.phone}>
             <Image
