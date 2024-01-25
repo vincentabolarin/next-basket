@@ -60,7 +60,7 @@ const ProductDetails: React.FC<ProductProps> = ({ productDetails }) => {
   
   const addToCart = () => {
     let stringifiedData = JSON.stringify([...cartItems, productDetails]);
-    localStorage.setItem("current_cart_items", stringifiedData);
+    if (typeof window !== "undefined") {localStorage.setItem("current_cart_items", stringifiedData);}    
 
     dispatch(addItem(productDetails));
     toast.success("Product successfully added to cart");
@@ -68,7 +68,7 @@ const ProductDetails: React.FC<ProductProps> = ({ productDetails }) => {
 
   const addItemToWishlist = () => {
     let stringifiedData = JSON.stringify([...wishlistItems, productDetails]);
-    localStorage.setItem("current_wishlist_items", stringifiedData);
+    if (typeof window !== "undefined") {localStorage.setItem("current_wishlist_items", stringifiedData);}
 
     dispatch(addToWishlist(productDetails))
     toast.success("Product successfully added to wishlist");
