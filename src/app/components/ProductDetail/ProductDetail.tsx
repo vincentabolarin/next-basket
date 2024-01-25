@@ -8,6 +8,11 @@ import like from "../../assets/like-2.svg";
 import cart from "../../assets/cart-2.svg";
 import view from "../../assets/view.svg"
 
+import type { RootState } from "../../redux/store";
+import { useSelector, useDispatch } from "react-redux";
+import { increment, decrement } from "../../redux/features/cartCounter/cartCounterSlice";
+import { toast } from "react-toastify";
+
 interface ProductProps {
   productDetails: {
     title: string;
@@ -43,6 +48,12 @@ const buttonSx = {
 };
 
 const ProductDetails: React.FC<ProductProps> = ({ productDetails }) => {
+  const dispatch = useDispatch();
+  const addToCart = () => {
+    dispatch(increment());
+    toast.success("Product successfully added to cart");
+  }
+
   return (
     <>
       {productDetails && (
@@ -122,6 +133,7 @@ const ProductDetails: React.FC<ProductProps> = ({ productDetails }) => {
                 height={iconSize}
                 alt="Button for adding a product to cart"
                 className={styles.icon}
+                onClick={addToCart}
               />
               <Image
                 src={view}
