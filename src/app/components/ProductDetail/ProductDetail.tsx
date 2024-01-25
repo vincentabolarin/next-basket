@@ -54,13 +54,22 @@ const buttonSx = {
 
 const ProductDetails: React.FC<ProductProps> = ({ productDetails }) => {
   const dispatch = useDispatch();
+
+  const cartItems = useSelector((state: RootState) => state.cart.data);
+  const wishlistItems = useSelector((state: RootState) => state.wishlist.data);
   
   const addToCart = () => {
+    let stringifiedData = JSON.stringify([...cartItems, productDetails]);
+    localStorage.setItem("current_cart_items", stringifiedData);
+
     dispatch(addItem(productDetails));
     toast.success("Product successfully added to cart");
   }
 
   const addItemToWishlist = () => {
+    let stringifiedData = JSON.stringify([...wishlistItems, productDetails]);
+    localStorage.setItem("current_wishlist_items", stringifiedData);
+
     dispatch(addToWishlist(productDetails))
     toast.success("Product successfully added to wishlist");
   }

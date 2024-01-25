@@ -4,12 +4,13 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface WishlistState {
   data: Array<Products>;
-  count: number;
 }
 
+
+const currentWishlistItems = JSON.parse(localStorage.getItem("current_wishlist_items")!);
+
 const initialState: WishlistState = {
-  data: [],
-  count: 0,
+  data: currentWishlistItems || [],
 };
 
 export const wishlistSlice = createSlice({
@@ -18,11 +19,9 @@ export const wishlistSlice = createSlice({
   reducers: {
     addToWishlist: (state, action: PayloadAction<Products>) => {
       state.data.push(action.payload);
-      state.count++;
     },
     removeFromWishlist: (state, action: PayloadAction<Products>) => {
       state.data.filter((data) => data !== action.payload);
-      state.count--;
     },
   },
 });
