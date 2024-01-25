@@ -46,6 +46,9 @@ const ProductDetails = () => {
     <>
       <div className={styles.container}>
         <ProductDetail productDetails={productDetails!} />
+        <p className="size-24 weight-700 uppercase text-color-primary">
+          Bestseller Products
+        </p>
         <Products columnsClass="columns4" canLoadMore={false} />
       </div>
     </>

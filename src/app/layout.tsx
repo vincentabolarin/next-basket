@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+
+import { ReduxProvider } from "./redux/provider";
+
 import { Inter } from "next/font/google";
 import "./globals.scss";
 import { Toaster } from "react-hot-toast";
@@ -23,17 +26,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ToastContainer
-          position="bottom-right"
-          autoClose={8000}
-          pauseOnHover={true}
-          draggable={true}
-          theme="dark"
-        />
-        <Topbar />
-        <Navbar />
-        {children}
-        <Footer />
+        <ReduxProvider>
+          <ToastContainer
+            position="bottom-right"
+            autoClose={8000}
+            pauseOnHover={true}
+            draggable={true}
+            theme="dark"
+          />
+          <Topbar />
+          <Navbar />
+          {children}
+          <Footer />
+        </ReduxProvider>
       </body>
     </html>
   );

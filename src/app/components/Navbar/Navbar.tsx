@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -8,9 +10,14 @@ import search from "../../assets/search.svg";
 import cart from "../../assets/cart.svg";
 import like from "../../assets/like.svg";
 
-const Navbar = () => {
-  const iconSize = 16;
+import { useSelector } from "react-redux";
+import { RootState } from "@components/app/redux/store";
 
+const Navbar = () => {
+  const cartCount = useSelector((state: RootState) => state.cart.count);
+
+  const iconSize = 16;
+  ;
   return (
     <>
       <div className={`${styles.container} container`}>
@@ -67,7 +74,7 @@ const Navbar = () => {
               width={iconSize}
               height={iconSize}
             />
-            <p className="color-primary size-12 weight-400">1</p>
+            <p className="color-primary size-12 weight-400">{cartCount}</p>
           </div>
           <div className={styles.action}>
             <Image

@@ -8,6 +8,13 @@ import like from "../../assets/like-2.svg";
 import cart from "../../assets/cart-2.svg";
 import view from "../../assets/view.svg"
 
+import type { RootState } from "../../redux/store";
+import { useSelector, useDispatch } from "react-redux";
+import { addItem, removeItem } from "../../redux/features/cart/cartSlice";
+import { toast } from "react-toastify";
+
+import star from "../../assets/star.svg";
+
 interface ProductProps {
   productDetails: {
     title: string;
@@ -32,6 +39,8 @@ const thumbnailHeight = 75;
 
 const iconSize = 20;
 
+const starSize = 18;
+
 const buttonSx = {
   boxShadow: "0px 0px 0px 0px",
   border: "1px solid #23A6F0",
@@ -43,6 +52,12 @@ const buttonSx = {
 };
 
 const ProductDetails: React.FC<ProductProps> = ({ productDetails }) => {
+  const dispatch = useDispatch();
+  const addToCart = () => {
+    dispatch(addItem(productDetails));
+    toast.success("Product successfully added to cart");
+  }
+
   return (
     <>
       {productDetails && (
@@ -76,10 +91,19 @@ const ProductDetails: React.FC<ProductProps> = ({ productDetails }) => {
               <p className="size-20 weight-400 text-color-primary">
                 {productDetails?.title}
               </p>
-              <p className="size-14 weight-400 text-color-secondary">
-                {productDetails?.rating} stars
-              </p>
-              <p className="size-24 weight-700">
+              <div className={`${styles.rating} size-14 weight-400 text-color-secondary`}>
+                <span>
+                  <Image
+                    src={star}
+                    width={starSize}
+                    height={starSize}
+                    alt="Star"
+                    key={crypto.randomUUID()}
+                  />
+                </span>
+                <span>{productDetails?.rating}</span>
+              </div>
+              <p className={`${styles.price} size-24 weight-700`}>
                 <span className="text-color-primary">
                   {`$${productDetails?.price}`}
                 </span>{" "}
@@ -122,6 +146,7 @@ const ProductDetails: React.FC<ProductProps> = ({ productDetails }) => {
                 height={iconSize}
                 alt="Button for adding a product to cart"
                 className={styles.icon}
+                onClick={addToCart}
               />
               <Image
                 src={view}
