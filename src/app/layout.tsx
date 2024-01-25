@@ -4,6 +4,7 @@ import "./globals.scss";
 import { Toaster } from "react-hot-toast";
 import Topbar from "./components/Topbar/Topbar";
 import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -22,10 +23,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ToastContainer />
+        <ToastContainer
+          position="bottom-right"
+          autoClose={8000}
+          pauseOnHover={true}
+          draggable={true}
+          theme="dark"
+        />
         <Topbar />
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

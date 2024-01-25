@@ -1,0 +1,67 @@
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 80%;
+  height: fit-content;
+
+  .left {
+    .thumbnails {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+      width: 450px;
+      overflow-x: scroll;
+    }
+  }
+
+  .right {
+    .details {
+      margin-bottom: 3rem;
+
+      p {
+        margin-top: 1rem;
+      }
+    }
+
+    .colours {
+      padding: 1rem 0;
+      border-top: 1px solid var(--text-color-muted);
+      display: flex;
+      gap: 1rem;
+
+      .colourOption {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+      .blue {
+        background-color: var(--primary-color);
+      }
+
+      .green {
+        background-color: var(--success-color);
+      }
+
+      .orange {
+        background-color: var(--orange);
+      }
+
+      .dark {
+        background-color: var(--text-color-primary);
+      }
+    }
+
+    .options {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-top: 2rem;
+
+      .icon {
+        cursor: pointer;
+      }
+    }
+  }
+}

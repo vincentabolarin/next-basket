@@ -5,6 +5,7 @@
   --white: #FFF;
   --light-gray: #E5E5E5;
   --light-gray-2: #FAFAFA;
+  --orange: #E77C40;
 
   --text-color-primary: #252B42;
   --text-color-secondary: #737373;
@@ -78,12 +79,28 @@ body {
     color: var(--white);
   }
 
+  .background-color-primary {
+    background-color: var(--primary-color);
+  }
+
   .background-color-secondary {
     background-color: var(--secondary-color);
   }
 
+  .background-color-success {
+    background-color: var(--success-color);
+  }
+
   .background-color-white {
     background-color: var(--white);
+  }
+
+  .background-color-orange {
+    background-color: var(--orange);
+  }
+
+  .background-color-dark {
+    background-color: var(--text-color-primary);
   }
 
   .background-color-light-gray-2 {
