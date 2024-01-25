@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@components/app/redux/store";
 
 const Navbar = () => {
-  const cartCount = useSelector((state: RootState) => state.cartCounter.count)
+  const cartCount = useSelector((state: RootState) => state.cart.count);
 
   const iconSize = 16;
   ;
