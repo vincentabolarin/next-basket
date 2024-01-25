@@ -14,8 +14,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "@components/app/redux/store";
 
 const Navbar = () => {
-  const cartCount = useSelector((state: RootState) => state.cart.count);
-  const wishlistCount = useSelector((state: RootState) => state.wishlist.count);
+  const cartCount = useSelector((state: RootState) => state.cart.data.length);
+  const wishlistCount = useSelector((state: RootState) => state.wishlist.data.length);
+
+  const currentCartItemsCount = JSON.parse(localStorage.getItem("current_cart_items")!).length;
+  const currentWishlistItemsCount = JSON.parse(localStorage.getItem("current_wishlist_items")!).length;
 
   const iconSize = 16;
   ;
@@ -75,7 +78,7 @@ const Navbar = () => {
               width={iconSize}
               height={iconSize}
             />
-            <p className="color-primary size-12 weight-400">{cartCount}</p>
+            <p className="color-primary size-12 weight-400">{currentCartItemsCount || cartCount}</p>
           </div>
           <div className={styles.action}>
             <Image
@@ -84,7 +87,7 @@ const Navbar = () => {
               width={iconSize}
               height={iconSize}
             />
-            <p className="color-primary size-12 weight-400">{wishlistCount}</p>
+            <p className="color-primary size-12 weight-400">{currentWishlistItemsCount|| wishlistCount}</p>
           </div>
         </div>
       </div>

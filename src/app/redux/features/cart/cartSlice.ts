@@ -4,12 +4,12 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface CartState {
   data: Array<Products>;
-  count: number;
 }
 
+const currentCartItems = JSON.parse(localStorage.getItem("current_cart_items")!);
+
 const initialState: CartState = {
-  data: [],
-  count: 0
+  data: currentCartItems || [],
 }
 
 export const cartSlice = createSlice({
@@ -18,11 +18,9 @@ export const cartSlice = createSlice({
   reducers: {
     addItem: (state, action: PayloadAction<Products>) => {
       state.data.push(action.payload);
-      state.count++;
     },
     removeItem: (state, action: PayloadAction<Products>) => {
       state.data.filter(data => data !== action.payload);
-      state.count--;
     }
   }
 });
