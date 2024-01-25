@@ -10,20 +10,15 @@
     row-gap: 2rem;
   }
 
+  .loadMoreButton.hide {
+    display: none;
+  }
+
   .columns4 {
     grid-template-columns: repeat(4, 1fr);
   }
 
   .columns5 {
     grid-template-columns: repeat(5, 1fr);
-  }
-
-
-  .loadMore {
-    width: fit-content;
-    border: 1px solid var(--primary-color);
-    border-radius: 5px;
-    padding: 15px 40px;
-    cursor: pointer;
   }
 }

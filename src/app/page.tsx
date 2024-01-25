@@ -3,7 +3,6 @@ import styles from "./page.module.scss";
 import Hero from "./components/Hero/Hero";
 import Products from "./components/Products/Products";
 import Services from "./components/Services/Services";
-import Footer from "./components/Footer/Footer";
 
 export default function Home() {
   return (
@@ -35,10 +34,8 @@ export default function Home() {
           These are our best services
         </p>
       </div>
-
+      
       <Services />
-
-      <Footer />
     </main>
   );
 }
