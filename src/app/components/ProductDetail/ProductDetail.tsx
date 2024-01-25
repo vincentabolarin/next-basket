@@ -11,6 +11,7 @@ import view from "../../assets/view.svg"
 import type { RootState } from "../../redux/store";
 import { useSelector, useDispatch } from "react-redux";
 import { addItem, removeItem } from "../../redux/features/cart/cartSlice";
+import { addToWishlist, removeFromWishlist } from "../../redux/features/wishlist/wishlistSlice";
 import { toast } from "react-toastify";
 
 import star from "../../assets/star.svg";
@@ -53,9 +54,15 @@ const buttonSx = {
 
 const ProductDetails: React.FC<ProductProps> = ({ productDetails }) => {
   const dispatch = useDispatch();
+  
   const addToCart = () => {
     dispatch(addItem(productDetails));
     toast.success("Product successfully added to cart");
+  }
+
+  const addItemToWishlist = () => {
+    dispatch(addToWishlist(productDetails))
+    toast.success("Product successfully added to wishlist");
   }
 
   return (
@@ -139,6 +146,7 @@ const ProductDetails: React.FC<ProductProps> = ({ productDetails }) => {
                 height={iconSize}
                 alt="Button for adding a product to wishlist"
                 className={styles.icon}
+                onClick={addItemToWishlist}
               />
               <Image
                 src={cart}

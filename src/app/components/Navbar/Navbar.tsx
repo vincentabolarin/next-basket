@@ -15,6 +15,7 @@ import { RootState } from "@components/app/redux/store";
 
 const Navbar = () => {
   const cartCount = useSelector((state: RootState) => state.cart.count);
+  const wishlistCount = useSelector((state: RootState) => state.wishlist.count);
 
   const iconSize = 16;
   ;
@@ -83,7 +84,7 @@ const Navbar = () => {
               width={iconSize}
               height={iconSize}
             />
-            <p className="color-primary size-12 weight-400">4</p>
+            <p className="color-primary size-12 weight-400">{wishlistCount}</p>
           </div>
         </div>
       </div>
