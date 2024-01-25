@@ -8,12 +8,12 @@ export interface CartState {
 
 let currentCartItems;
 
-if (typeof window !== "undefined") {
+// if (typeof window !== "undefined") {
   currentCartItems = JSON.parse(localStorage.getItem("current_cart_items")!);
-}
+// }
 
 const initialState: CartState = {
-  data: currentCartItems || [],
+  data: currentCartItems ? currentCartItems : [],
 }
 
 export const cartSlice = createSlice({

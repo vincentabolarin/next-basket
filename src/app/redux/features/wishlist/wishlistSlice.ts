@@ -8,14 +8,14 @@ export interface WishlistState {
 
 let currentWishlistItems
 
-if (typeof window !== "undefined") {
+// if (typeof window !== "undefined") {
   currentWishlistItems = JSON.parse(
     window?.localStorage?.getItem("current_wishlist_items")!
   );
-}
+// }
 
 const initialState: WishlistState = {
-  data: currentWishlistItems || [],
+  data: currentWishlistItems ? currentWishlistItems : [],
 };
 
 export const wishlistSlice = createSlice({
