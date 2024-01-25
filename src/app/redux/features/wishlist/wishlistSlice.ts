@@ -6,8 +6,13 @@ export interface WishlistState {
   data: Array<Products>;
 }
 
+let currentWishlistItems
 
-const currentWishlistItems = JSON.parse(localStorage.getItem("current_wishlist_items")!);
+if (typeof window !== "undefined") {
+  currentWishlistItems = JSON.parse(
+    window?.localStorage?.getItem("current_wishlist_items")!
+  );
+}
 
 const initialState: WishlistState = {
   data: currentWishlistItems || [],

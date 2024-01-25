@@ -6,7 +6,11 @@ export interface CartState {
   data: Array<Products>;
 }
 
-const currentCartItems = JSON.parse(localStorage.getItem("current_cart_items")!);
+let currentCartItems;
+
+if (typeof window !== "undefined") {
+  currentCartItems = JSON.parse(localStorage.getItem("current_cart_items")!);
+}
 
 const initialState: CartState = {
   data: currentCartItems || [],

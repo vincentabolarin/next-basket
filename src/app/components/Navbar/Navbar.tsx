@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -14,12 +16,25 @@ import { useSelector } from "react-redux";
 import { RootState } from "@components/app/redux/store";
 
 const Navbar = () => {
+  let currentCartItemsCount;
+  let currentWishlistItemsCount;
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      currentCartItemsCount = JSON.parse(
+        localStorage.getItem("current_cart_items")!
+      ).length;
+      currentWishlistItemsCount = JSON.parse(
+        localStorage.getItem("current_wishlist_items")!
+      ).length;
+    }
+    
+  }, []);
+
   const cartCount = useSelector((state: RootState) => state.cart.data.length);
   const wishlistCount = useSelector((state: RootState) => state.wishlist.data.length);
 
-  const currentCartItemsCount = JSON.parse(localStorage.getItem("current_cart_items")!).length;
-  const currentWishlistItemsCount = JSON.parse(localStorage.getItem("current_wishlist_items")!).length;
-
+  
   const iconSize = 16;
   ;
   return (
