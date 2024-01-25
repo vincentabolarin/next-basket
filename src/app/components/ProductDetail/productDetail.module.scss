@@ -67,6 +67,14 @@
       .icon {
         cursor: pointer;
       }
+
+      #wishlist-icon.disabled {
+        pointer-events: none;
+      }
+
+      #cart-icon.disabled {
+        pointer-events: none;
+      }
     }
   }
 }

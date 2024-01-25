@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface WishlistState {
@@ -8,14 +10,15 @@ export interface WishlistState {
 
 let currentWishlistItems
 
-if (typeof window !== "undefined") {
+useEffect(() => {
   currentWishlistItems = JSON.parse(
     window?.localStorage?.getItem("current_wishlist_items")!
   );
-}
+})
+  
 
 const initialState: WishlistState = {
-  data: currentWishlistItems || [],
+  data: currentWishlistItems ? currentWishlistItems : [],
 };
 
 export const wishlistSlice = createSlice({

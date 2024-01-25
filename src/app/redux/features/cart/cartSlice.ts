@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface CartState {
@@ -8,12 +10,12 @@ export interface CartState {
 
 let currentCartItems;
 
-if (typeof window !== "undefined") {
+useEffect(() => {
   currentCartItems = JSON.parse(localStorage.getItem("current_cart_items")!);
-}
+})
 
 const initialState: CartState = {
-  data: currentCartItems || [],
+  data: currentCartItems ? currentCartItems : [],
 }
 
 export const cartSlice = createSlice({

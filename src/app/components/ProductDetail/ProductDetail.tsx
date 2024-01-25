@@ -64,6 +64,9 @@ const ProductDetails: React.FC<ProductProps> = ({ productDetails }) => {
 
     dispatch(addItem(productDetails));
     toast.success("Product successfully added to cart");
+
+    const cartIcon = document.querySelector("#cart-icon");
+    cartIcon?.classList.add("disabled");
   }
 
   const addItemToWishlist = () => {
@@ -72,6 +75,9 @@ const ProductDetails: React.FC<ProductProps> = ({ productDetails }) => {
 
     dispatch(addToWishlist(productDetails))
     toast.success("Product successfully added to wishlist");
+
+    const wishlistIcon = document.querySelector("#wishlist-icon");
+    wishlistIcon?.classList.add("disabled");
   }
 
   return (
@@ -107,7 +113,9 @@ const ProductDetails: React.FC<ProductProps> = ({ productDetails }) => {
               <p className="size-20 weight-400 text-color-primary">
                 {productDetails?.title}
               </p>
-              <div className={`${styles.rating} size-14 weight-400 text-color-secondary`}>
+              <div
+                className={`${styles.rating} size-14 weight-400 text-color-secondary`}
+              >
                 <span>
                   <Image
                     src={star}
@@ -149,22 +157,29 @@ const ProductDetails: React.FC<ProductProps> = ({ productDetails }) => {
               >
                 Load More Products
               </Button>
-              <Image
-                src={like}
-                width={iconSize}
-                height={iconSize}
-                alt="Button for adding a product to wishlist"
-                className={styles.icon}
-                onClick={addItemToWishlist}
-              />
-              <Image
-                src={cart}
-                width={iconSize}
-                height={iconSize}
-                alt="Button for adding a product to cart"
-                className={styles.icon}
-                onClick={addToCart}
-              />
+
+              <div id="wishlist-icon">
+                <Image
+                  src={like}
+                  width={iconSize}
+                  height={iconSize}
+                  alt="Button for adding a product to wishlist"
+                  className={styles.icon}
+                  onClick={addItemToWishlist}
+                />
+              </div>
+
+              <div id="cart-icon">
+                <Image
+                  src={cart}
+                  width={iconSize}
+                  height={iconSize}
+                  alt="Button for adding a product to cart"
+                  className={styles.icon}
+                  onClick={addToCart}
+                />
+              </div>
+
               <Image
                 src={view}
                 width={iconSize}
