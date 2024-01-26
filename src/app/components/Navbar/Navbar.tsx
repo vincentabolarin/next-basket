@@ -184,7 +184,7 @@ const Navbar = () => {
         >
           <Fade in={modalOpen}>
             <Box sx={modalStyle}>
-              <Box sx={{ borderBottom: "1px solid var(--light-gray)"}}>
+              <Box sx={{ borderBottom: "1px solid var(--light-gray)" }}>
                 <Typography
                   id="transition-modal-title"
                   variant="h6"
@@ -198,6 +198,15 @@ const Navbar = () => {
                 </Typography>
               </Box>
               <Box sx={modalContentStyle}>
+                {modalItemsToDisplay.length === 0 && (
+                  <Typography>
+                    {`Your ${
+                      modalItemsToDisplay === existingCartItems
+                        ? "cart"
+                        : "wishlist"
+                    } is currently empty.`}
+                  </Typography>
+                )}
                 {modalItemsToDisplay.map((item: Products) => {
                   return (
                     <div key={crypto.randomUUID()}>
@@ -211,8 +220,16 @@ const Navbar = () => {
                           />
                           <Box>
                             <Typography component="h2">{item.title}</Typography>
-                            <Typography component="p">{item.description}</Typography>
-                            <Typography component="p">${getDiscountedPrice(item.price, item.discountPercentage)}</Typography>
+                            <Typography component="p">
+                              {item.description}
+                            </Typography>
+                            <Typography component="p">
+                              $
+                              {getDiscountedPrice(
+                                item.price,
+                                item.discountPercentage
+                              )}
+                            </Typography>
                           </Box>
                         </Box>
 
