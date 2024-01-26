@@ -55,29 +55,38 @@ const buttonSx = {
 const ProductDetails: React.FC<ProductProps> = ({ productDetails }) => {
   const dispatch = useDispatch();
 
-  const cartItems = useSelector((state: RootState) => state.cart.data);
-  const wishlistItems = useSelector((state: RootState) => state.wishlist.data);
-  
+  const existingCartItems = useSelector(
+    (state: RootState) => state.cart.data
+  );
+
+  const existingWishlistItems = useSelector(
+    (state: RootState) => state.wishlist.data
+  );
+
   const addToCart = () => {
-    let stringifiedData = JSON.stringify([...cartItems, productDetails]);
-    if (typeof window !== "undefined") {localStorage.setItem("current_cart_items", stringifiedData);}    
-
-    dispatch(addItem(productDetails));
-    toast.success("Product successfully added to cart");
-
     const cartIcon = document.querySelector("#cart-icon");
-    cartIcon?.classList.add("disabled");
+
+    if (existingCartItems.includes(productDetails)) {
+      toast.error("You have already added this product to cart");
+    } else {
+      dispatch(addItem(productDetails));
+      toast.success("Product successfully added to cart");
+
+      cartIcon?.classList.add(`${styles.disabled}`);
+    }
   }
 
   const addItemToWishlist = () => {
-    let stringifiedData = JSON.stringify([...wishlistItems, productDetails]);
-    if (typeof window !== "undefined") {localStorage.setItem("current_wishlist_items", stringifiedData);}
-
-    dispatch(addToWishlist(productDetails))
-    toast.success("Product successfully added to wishlist");
-
     const wishlistIcon = document.querySelector("#wishlist-icon");
-    wishlistIcon?.classList.add("disabled");
+
+    if (existingWishlistItems.includes(productDetails)) {
+      toast.error("You have already added this product to wishlist");
+    } else {
+      dispatch(addToWishlist(productDetails));
+      toast.success("Product successfully added to wishlist");
+
+      wishlistIcon?.classList.add(`${styles.disabled}`);
+    }
   }
 
   return (
@@ -158,18 +167,7 @@ const ProductDetails: React.FC<ProductProps> = ({ productDetails }) => {
                 Load More Products
               </Button>
 
-              <div id="wishlist-icon">
-                <Image
-                  src={like}
-                  width={iconSize}
-                  height={iconSize}
-                  alt="Button for adding a product to wishlist"
-                  className={styles.icon}
-                  onClick={addItemToWishlist}
-                />
-              </div>
-
-              <div id="cart-icon">
+              <div id="cart-icon" className={styles.cartIcon}>
                 <Image
                   src={cart}
                   width={iconSize}
@@ -177,6 +175,17 @@ const ProductDetails: React.FC<ProductProps> = ({ productDetails }) => {
                   alt="Button for adding a product to cart"
                   className={styles.icon}
                   onClick={addToCart}
+                />
+              </div>
+
+              <div id="wishlist-icon" className={styles.wishlistIcon}>
+                <Image
+                  src={like}
+                  width={iconSize}
+                  height={iconSize}
+                  alt="Button for adding a product to wishlist"
+                  className={styles.icon}
+                  onClick={addItemToWishlist}
                 />
               </div>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -16,12 +16,13 @@ import { useSelector } from "react-redux";
 import { RootState } from "@components/app/redux/store";
 
 const Navbar = () => {
-  const cartCount = useSelector((state: RootState) => state.cart.data.length);
-  const wishlistCount = useSelector((state: RootState) => state.wishlist.data.length);
+  let cartCount = 0;
+  let wishlistCount = 0;
 
-  
+  cartCount = useSelector((state: RootState) => state.cart.data.length);
+  wishlistCount = useSelector((state: RootState) => state.wishlist.data.length);
+
   const iconSize = 16;
-  ;
   return (
     <>
       <div className={`${styles.container} container`}>
