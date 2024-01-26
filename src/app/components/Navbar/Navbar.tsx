@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import styles from "./navbar.module.scss";
+import { toast } from "react-toastify";
 
 import { Backdrop, Box, Modal, Fade, Button, Typography } from "@mui/material";
 import Delete from "@mui/icons-material/Delete";
@@ -83,15 +84,21 @@ const Navbar = () => {
     setModalOpen(true);
   }
 
-  // const removeSelectedItem = (item: Products): any => {
-  //   if (modalItemsToDisplay.length > 0) {
-  //     if (modalItemsToDisplay === existingCartItems) {
-  //       dispatch(removeItem(item));
-  //     } else {
-  //       dispatch(removeFromWishlist(item));
-  //     }
-  //   }
-  // }
+  const removeSelectedItem = (item: Products): any => {
+    try {
+       if (modalItemsToDisplay === existingCartItems) {
+         dispatch(removeItem(item));
+         setModalItemsToDisplay(modalItemsToDisplay.filter(modalItem => modalItem.id !== item.id && modalItem.title !== item.title));
+         toast.success(`${item.title} successfully removed from cart`);
+       } else {
+         dispatch(removeFromWishlist(item));
+         setModalItemsToDisplay(modalItemsToDisplay.filter(modalItem => modalItem.id !== item.id && modalItem.title !== item.title));
+         toast.success(`${item.title} successfully removed from wishlist`);
+       }
+    } catch (error) {
+      toast.error("error");
+    }
+  }
 
   const iconSize = 16;
   return (
@@ -233,9 +240,9 @@ const Navbar = () => {
                           </Box>
                         </Box>
 
-                        {/* <Box onClick={removeSelectedItem(item)}>
+                        <div onClick={() => removeSelectedItem(item)}>
                           <Delete sx={{ color: "red", cursor: "pointer" }} />
-                        </Box> */}
+                        </div>
                       </Box>
                     </div>
                   );
