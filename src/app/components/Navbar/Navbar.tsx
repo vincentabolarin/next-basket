@@ -7,20 +7,91 @@ import Link from "next/link";
 
 import styles from "./navbar.module.scss";
 
+import { Backdrop, Box, Modal, Fade, Button, Typography } from "@mui/material";
+import Delete from "@mui/icons-material/Delete";
+
+
 import person from "../../assets/person.svg";
 import search from "../../assets/search.svg";
 import cart from "../../assets/cart.svg";
 import like from "../../assets/like.svg";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@components/app/redux/store";
+import { getDiscountedPrice } from "@components/app/utils/calculations";
+import { removeItem } from "@components/app/redux/features/cart/cartSlice";
+import { removeFromWishlist } from "@components/app/redux/features/wishlist/wishlistSlice";
 
 const Navbar = () => {
-  let cartCount = 0;
-  let wishlistCount = 0;
+  const dispatch = useDispatch();
 
-  cartCount = useSelector((state: RootState) => state.cart.data.length);
-  wishlistCount = useSelector((state: RootState) => state.wishlist.data.length);
+  const [modalItemsToDisplay, setModalItemsToDisplay] = useState<Array<Products>>([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const handleModalOpen = () => setModalOpen(true);
+  const handleModalClose = () => setModalOpen(false);
+
+  const modalStyle = {
+    position: "absolute" as "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "60dvw",
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+    outline: "none",
+    maxHeight: "80dvh",
+    overflow: "auto"
+  };
+
+  const modalContentStyle = {
+    display: "flex",
+    flexDirection: "column",
+    marginTop: "1rem",
+  }
+
+  const modalRowStyle = {
+    padding: "1rem 0",
+    borderBottom: "1px solid var(--light-gray)",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: "3rem"
+  };
+
+  const modalRowLeftStyle = {
+    display: "flex",
+    alignItems: "center",
+    gap: "1rem"
+  }
+
+  let existingCartItems: Array<Products> = useSelector(
+    (state: RootState) => state.cart.data
+  );
+  let existingWishlistItems: Array<Products> = useSelector(
+    (state: RootState) => state.wishlist.data
+  );
+
+  const displayCartItems = () => {
+    setModalItemsToDisplay(existingCartItems);
+    setModalOpen(true);
+  }
+  
+  const displayWishlistItems = () => {
+    setModalItemsToDisplay(existingWishlistItems);
+    setModalOpen(true);
+  }
+
+  // const removeSelectedItem = (item: Products): any => {
+  //   if (modalItemsToDisplay.length > 0) {
+  //     if (modalItemsToDisplay === existingCartItems) {
+  //       dispatch(removeItem(item));
+  //     } else {
+  //       dispatch(removeFromWishlist(item));
+  //     }
+  //   }
+  // }
 
   const iconSize = 16;
   return (
@@ -72,25 +143,90 @@ const Navbar = () => {
               height={iconSize}
             />
           </div>
-          <div className={styles.action}>
+          <div className={styles.action} onClick={displayCartItems}>
             <Image
               src={cart}
               alt="Cart icon"
               width={iconSize}
               height={iconSize}
             />
-            <p className="color-primary size-12 weight-400">{cartCount}</p>
+            <p className="color-primary size-12 weight-400">
+              {existingCartItems.length}
+            </p>
           </div>
-          <div className={styles.action}>
+          <div className={styles.action} onClick={displayWishlistItems}>
             <Image
               src={like}
               alt="Like icon"
               width={iconSize}
               height={iconSize}
             />
-            <p className="color-primary size-12 weight-400">{wishlistCount}</p>
+            <p className="color-primary size-12 weight-400">
+              {existingWishlistItems.length}
+            </p>
           </div>
         </div>
+      </div>
+
+      <div className={styles.modalContainer}>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          open={modalOpen}
+          onClose={handleModalClose}
+          closeAfterTransition
+          slots={{ backdrop: Backdrop }}
+          slotProps={{
+            backdrop: {
+              timeout: 500,
+            },
+          }}
+        >
+          <Fade in={modalOpen}>
+            <Box sx={modalStyle}>
+              <Box sx={{ borderBottom: "1px solid var(--light-gray)"}}>
+                <Typography
+                  id="transition-modal-title"
+                  variant="h6"
+                  component="h2"
+                >
+                  {`${
+                    modalItemsToDisplay === existingCartItems
+                      ? "Cart"
+                      : "Wishlist"
+                  }`}
+                </Typography>
+              </Box>
+              <Box sx={modalContentStyle}>
+                {modalItemsToDisplay.map((item: Products) => {
+                  return (
+                    <div key={crypto.randomUUID()}>
+                      <Box sx={modalRowStyle}>
+                        <Box sx={modalRowLeftStyle}>
+                          <Image
+                            src={item.thumbnail}
+                            alt={`Image of ${item.thumbnail}`}
+                            width={50}
+                            height={50}
+                          />
+                          <Box>
+                            <Typography component="h2">{item.title}</Typography>
+                            <Typography component="p">{item.description}</Typography>
+                            <Typography component="p">${getDiscountedPrice(item.price, item.discountPercentage)}</Typography>
+                          </Box>
+                        </Box>
+
+                        {/* <Box onClick={removeSelectedItem(item)}>
+                          <Delete sx={{ color: "red", cursor: "pointer" }} />
+                        </Box> */}
+                      </Box>
+                    </div>
+                  );
+                })}
+              </Box>
+            </Box>
+          </Fade>
+        </Modal>
       </div>
     </>
   );
