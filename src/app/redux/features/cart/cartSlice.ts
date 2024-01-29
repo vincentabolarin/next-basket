@@ -1,15 +1,15 @@
 "use client";
 
+import { useEffect } from "react";
+
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface CartState {
   data: Array<Products>;
 }
 
-const currentCartItems = JSON.parse(localStorage.getItem("current_cart_items")!);
-
 const initialState: CartState = {
-  data: currentCartItems || [],
+  data: [],
 }
 
 export const cartSlice = createSlice({
@@ -20,7 +20,7 @@ export const cartSlice = createSlice({
       state.data.push(action.payload);
     },
     removeItem: (state, action: PayloadAction<Products>) => {
-      state.data.filter(data => data !== action.payload);
+      state.data = state.data.filter(data => data.id !== action.payload.id && data.title !== action.payload.title);
     }
   }
 });

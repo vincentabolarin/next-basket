@@ -57,23 +57,38 @@ const buttonSx = {
 const ProductDetails: React.FC<ProductProps> = ({ productDetails }) => {
   const dispatch = useDispatch();
 
-  const cartItems = useSelector((state: RootState) => state.cart.data);
-  const wishlistItems = useSelector((state: RootState) => state.wishlist.data);
-  
-  const addToCart = () => {
-    let stringifiedData = JSON.stringify([...cartItems, productDetails]);
-    localStorage.setItem("current_cart_items", stringifiedData);
+  const existingCartItems = useSelector(
+    (state: RootState) => state.cart.data
+  );
 
-    dispatch(addItem(productDetails));
-    toast.success("Product successfully added to cart");
+  const existingWishlistItems = useSelector(
+    (state: RootState) => state.wishlist.data
+  );
+
+  const addToCart = () => {
+    const cartIcon = document.querySelector("#cart-icon");
+
+    if (existingCartItems.includes(productDetails)) {
+      toast.error("You have already added this product to cart");
+    } else {
+      dispatch(addItem(productDetails));
+      toast.success("Product successfully added to cart");
+
+      cartIcon?.classList.add(`${styles.disabled}`);
+    }
   }
 
   const addItemToWishlist = () => {
-    let stringifiedData = JSON.stringify([...wishlistItems, productDetails]);
-    localStorage.setItem("current_wishlist_items", stringifiedData);
+    const wishlistIcon = document.querySelector("#wishlist-icon");
 
-    dispatch(addToWishlist(productDetails))
-    toast.success("Product successfully added to wishlist");
+    if (existingWishlistItems.includes(productDetails)) {
+      toast.error("You have already added this product to wishlist");
+    } else {
+      dispatch(addToWishlist(productDetails));
+      toast.success("Product successfully added to wishlist");
+
+      wishlistIcon?.classList.add(`${styles.disabled}`);
+    }
   }
 
   return (
@@ -109,7 +124,9 @@ const ProductDetails: React.FC<ProductProps> = ({ productDetails }) => {
               <p className="size-20 weight-400 text-color-primary">
                 {productDetails?.title}
               </p>
-              <div className={`${styles.rating} size-14 weight-400 text-color-secondary`}>
+              <div
+                className={`${styles.rating} size-14 weight-400 text-color-secondary`}
+              >
                 <span>
                   <Image
                     src={star}
@@ -151,22 +168,29 @@ const ProductDetails: React.FC<ProductProps> = ({ productDetails }) => {
               >
                 Load More Products
               </Button>
-              <Image
-                src={like}
-                width={iconSize}
-                height={iconSize}
-                alt="Button for adding a product to wishlist"
-                className={styles.icon}
-                onClick={addItemToWishlist}
-              />
-              <Image
-                src={cart}
-                width={iconSize}
-                height={iconSize}
-                alt="Button for adding a product to cart"
-                className={styles.icon}
-                onClick={addToCart}
-              />
+
+              <div id="cart-icon" className={styles.cartIcon}>
+                <Image
+                  src={cart}
+                  width={iconSize}
+                  height={iconSize}
+                  alt="Button for adding a product to cart"
+                  className={styles.icon}
+                  onClick={addToCart}
+                />
+              </div>
+
+              <div id="wishlist-icon" className={styles.wishlistIcon}>
+                <Image
+                  src={like}
+                  width={iconSize}
+                  height={iconSize}
+                  alt="Button for adding a product to wishlist"
+                  className={styles.icon}
+                  onClick={addItemToWishlist}
+                />
+              </div>
+
               <Image
                 src={view}
                 width={iconSize}

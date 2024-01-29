@@ -37,10 +37,6 @@ const ProductDetails = () => {
   useEffect(() => {
     getProductDetails();
   }, []);
-
-  useEffect(() => {
-    console.log('productDetails', productDetails)
-  }, [productDetails]);
   
   return (
     <>

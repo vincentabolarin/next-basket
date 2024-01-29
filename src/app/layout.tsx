@@ -34,8 +34,11 @@ export default function RootLayout({
             draggable={true}
             theme="dark"
           />
-          <Topbar />
-          <Navbar />
+          <div className="topbar-navbar">
+            <Topbar />
+            <Navbar />
+          </div>
+
           {children}
           <Footer />
         </ReduxProvider>
