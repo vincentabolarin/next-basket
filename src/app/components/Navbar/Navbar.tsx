@@ -19,7 +19,7 @@ import like from "../../assets/like.svg";
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@components/app/redux/store";
-import { getDiscountedPrice } from "@components/app/utils/calculations";
+import { getDiscountedPrice, toDollars } from "@components/app/utils/calculations";
 import { removeItem } from "@components/app/redux/features/cart/cartSlice";
 import { removeFromWishlist } from "@components/app/redux/features/wishlist/wishlistSlice";
 
@@ -29,8 +29,18 @@ const Navbar = () => {
   const [modalItemsToDisplay, setModalItemsToDisplay] = useState<Array<Products>>([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [actionsOn, setActionsOn] = useState("");
+  const [total, setTotal] = useState(0);
   const handleModalOpen = () => setModalOpen(true);
   const handleModalClose = () => setModalOpen(false);
+
+  const calculateTotal = () => {
+    let totalPrice = modalItemsToDisplay?.reduce((sum, product) => sum + getDiscountedPrice(product.price, product.discountPercentage), 0);
+    setTotal(totalPrice);
+  }
+
+  useEffect(() => {
+    calculateTotal();
+  }, [modalItemsToDisplay]);
 
   const modalStyle = {
     position: "absolute" as "absolute",
@@ -66,6 +76,12 @@ const Navbar = () => {
     display: "flex",
     alignItems: "center",
     gap: "1rem"
+  }
+
+  const modalTotalStyle = {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center"
   }
 
   let existingCartItems: Array<Products> = useSelector(
@@ -104,6 +120,7 @@ const Navbar = () => {
   }
 
   const iconSize = 16;
+
   return (
     <>
       <div className={`${styles.container} container`}>
@@ -200,20 +217,14 @@ const Navbar = () => {
                   variant="h6"
                   component="h2"
                 >
-                  {`${
-                    actionsOn === "cart"
-                      ? "Cart"
-                      : "Wishlist"
-                  }`}
+                  {`${actionsOn === "cart" ? "Cart" : "Wishlist"}`}
                 </Typography>
               </Box>
               <Box sx={modalContentStyle}>
                 {modalItemsToDisplay.length === 0 && (
                   <Typography>
                     {`Your ${
-                      actionsOn === "cart"
-                        ? "cart"
-                        : "wishlist"
+                      actionsOn === "cart" ? "cart" : "wishlist"
                     } is currently empty.`}
                   </Typography>
                 )}
@@ -229,11 +240,22 @@ const Navbar = () => {
                             height={50}
                           />
                           <Box>
-                            <Typography component="h2">{item.title}</Typography>
+                            <Typography
+                              component="h2"
+                              sx={{ fontWeight: "bold" }}
+                            >
+                              {item.title}
+                            </Typography>
                             <Typography component="p">
                               {item.description}
                             </Typography>
-                            <Typography component="p">
+                            <Typography
+                              component="p"
+                              sx={{
+                                color: "var(--success-color)",
+                                fontWeight: "700",
+                              }}
+                            >
                               $
                               {getDiscountedPrice(
                                 item.price,
@@ -251,6 +273,21 @@ const Navbar = () => {
                   );
                 })}
               </Box>
+
+              {modalItemsToDisplay.length > 0 && (
+                <Box sx={modalTotalStyle}>
+                  <Typography>Total</Typography>
+
+                  <Typography
+                    id="transition-modal-title"
+                    variant="h6"
+                    component="h2"
+                    sx={{ fontWeight: "bold" }}
+                  >
+                    {toDollars(total)}
+                  </Typography>
+                </Box>
+              )}
             </Box>
           </Fade>
         </Modal>
