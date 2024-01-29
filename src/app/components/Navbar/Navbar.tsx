@@ -28,6 +28,7 @@ const Navbar = () => {
 
   const [modalItemsToDisplay, setModalItemsToDisplay] = useState<Array<Products>>([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [actionsOn, setActionsOn] = useState("");
   const handleModalOpen = () => setModalOpen(true);
   const handleModalClose = () => setModalOpen(false);
 
@@ -76,17 +77,19 @@ const Navbar = () => {
 
   const displayCartItems = () => {
     setModalItemsToDisplay(existingCartItems);
+    setActionsOn("cart");
     setModalOpen(true);
   }
   
   const displayWishlistItems = () => {
     setModalItemsToDisplay(existingWishlistItems);
+    setActionsOn("wishlist");
     setModalOpen(true);
   }
 
   const removeSelectedItem = (item: Products): any => {
     try {
-       if (modalItemsToDisplay === existingCartItems) {
+       if (actionsOn === "cart") {
          dispatch(removeItem(item));
          setModalItemsToDisplay(modalItemsToDisplay.filter(modalItem => modalItem.id !== item.id && modalItem.title !== item.title));
          toast.success(`${item.title} successfully removed from cart`);
@@ -198,7 +201,7 @@ const Navbar = () => {
                   component="h2"
                 >
                   {`${
-                    modalItemsToDisplay === existingCartItems
+                    actionsOn === "cart"
                       ? "Cart"
                       : "Wishlist"
                   }`}
@@ -208,7 +211,7 @@ const Navbar = () => {
                 {modalItemsToDisplay.length === 0 && (
                   <Typography>
                     {`Your ${
-                      modalItemsToDisplay === existingCartItems
+                      actionsOn === "cart"
                         ? "cart"
                         : "wishlist"
                     } is currently empty.`}
