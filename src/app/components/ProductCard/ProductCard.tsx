@@ -9,7 +9,7 @@ interface ProductProps {
   name: string;
   description: string;
   price: number;
-  discountedPrice: string;
+  discountedPrice: number;
 }
 
 const imageWidth = 180;
